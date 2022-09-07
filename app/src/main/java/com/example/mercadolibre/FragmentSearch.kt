@@ -14,12 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FragmentSearch : BaseFragment<FragmentSearchBinding>() {
     private val viewModel: SearchViewModel by viewModels()
-    private var list = arrayListOf(
-        SearchHistory("Test 1", 4),
-        SearchHistory("Test 2", 1),
-        SearchHistory("Test 3", 8),
-        SearchHistory("Test 4", 2),
-    )
     private lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
     override fun getLayoutId(): Int {
@@ -30,6 +24,25 @@ class FragmentSearch : BaseFragment<FragmentSearchBinding>() {
         requestInputFocus()
         setupSearchAdapter()
         setupSearchViewWhite()
+        setupObservers()
+        getSearchHistory()
+    }
+
+    private fun setupObservers() {
+        with(viewModel) {
+            isLoading.observe(viewLifecycleOwner) {
+                if(it)
+                    showLoading()
+                else
+                    hideLoading()
+            }
+            error.observe(viewLifecycleOwner) {
+
+            }
+            searchHistory.observe(viewLifecycleOwner) {
+                searchHistoryAdapter.submitList(ArrayList(it))
+            }
+        }
     }
 
     private fun requestInputFocus() {
@@ -38,9 +51,16 @@ class FragmentSearch : BaseFragment<FragmentSearchBinding>() {
 
     private fun setupSearchViewWhite() {
         with(binding) {
-            searchViewWhite.setupView(onSearch = { productName ->
-                goToListScreen(productName)
-            }, onBackPressed = {
+            searchViewWhite.setupView(
+                onSearch = { productName ->
+                    viewModel.insertOrUpdateSearch(
+                        SearchHistory(
+                            text = productName,
+                            timestamp = System.currentTimeMillis()
+                        )
+                    )
+                    goToListScreen(productName)
+            },  onBackPressed = {
                 goToHomeScreen()
             })
         }
@@ -54,6 +74,7 @@ class FragmentSearch : BaseFragment<FragmentSearchBinding>() {
                     requestInputFocus()
                 },
                 onHistoryClicked = { productName ->
+                    viewModel.updateSearch(productName)
                     goToListScreen(productName)
                     hideKeyboard()
                 })
@@ -62,7 +83,10 @@ class FragmentSearch : BaseFragment<FragmentSearchBinding>() {
                 adapter = searchHistoryAdapter
             }
         }
-        searchHistoryAdapter.submitList(list)
+    }
+
+    private fun getSearchHistory() {
+        viewModel.getSearchHistory()
     }
 
     private fun goToHomeScreen() {

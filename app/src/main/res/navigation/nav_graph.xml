@@ -27,9 +27,6 @@
                 android:name="productName"
                 app:argType="string"/>
         </action>
-        <action
-            android:id="@+id/action_fragmentSearch_to_fragmentHome"
-            app:destination="@id/fragmentHome" />
     </fragment>
     <fragment
         android:id="@+id/fragmentList"
@@ -39,9 +36,6 @@
         <action
             android:id="@+id/action_fragmentList_to_fragmentDetail"
             app:destination="@id/fragmentDetail" />
-        <action
-            android:id="@+id/action_fragmentList_to_fragmentHome"
-            app:destination="@id/fragmentHome" />
     </fragment>
     <fragment
         android:id="@+id/fragmentDetail"

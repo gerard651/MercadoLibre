@@ -11,12 +11,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: SearchRepository
+    private val repository: SearchRepository,
 ): ViewModel() {
 
     var isLoading = MutableLiveData(false)
     var error = MutableLiveData("")
     var products = MutableLiveData<List<Product>>(listOf())
+    var searchHistory = MutableLiveData<List<SearchHistory>>(listOf())
 
     fun searchProduct(name: String) {
         viewModelScope.launch {
@@ -26,6 +27,38 @@ class SearchViewModel @Inject constructor(
                     response.data.let { searchResponse ->
                         searchResponse.let { productsResponse ->
                             products.value = productsResponse!!.results
+                        }
+                    }
+                    isLoading.value = false
+                }
+                is Resource.Error -> {
+                    error.value = response.message ?: ""
+                    isLoading.value = false
+                }
+            }
+        }
+    }
+
+    fun insertOrUpdateSearch(searchHistory: SearchHistory) {
+        viewModelScope.launch {
+            repository.insertOrUpdateSearchHistory(searchHistory)
+        }
+    }
+
+    fun updateSearch(searchText: String) {
+        viewModelScope.launch {
+            repository.updateSearchHistory(searchText, System.currentTimeMillis())
+        }
+    }
+
+    fun getSearchHistory() {
+        viewModelScope.launch {
+            isLoading.value = true
+            when(val response = repository.getSearchHistory()) {
+                is Resource.Success -> {
+                    response.data.let { searchResponse ->
+                        searchResponse.let { productsResponse ->
+                            searchHistory.value = productsResponse!!
                         }
                     }
                     isLoading.value = false

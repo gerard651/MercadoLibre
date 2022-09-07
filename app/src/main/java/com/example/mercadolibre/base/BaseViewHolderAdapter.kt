@@ -26,7 +26,7 @@ abstract class BaseViewHolderAdapter<T, B: ViewDataBinding> : RecyclerView.Adapt
 
     private fun getItem(position: Int) = list[position]
 
-    override fun getItemViewType(position: Int) = position
+    override fun getItemViewType(position: Int) = list[position].hashCode()
 
     override fun getItemId(position: Int) = position.toLong()
 

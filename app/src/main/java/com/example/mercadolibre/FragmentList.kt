@@ -63,7 +63,7 @@ class FragmentList : BaseFragment<FragmentListBinding>() {
 
     private fun setupSearchView(productName: String) {
         with(binding.searchViewYellow) {
-            setText(productName, false)
+            setText(productName)
             setupView { hasFocus ->
                 if(hasFocus) {
                     goToHomeScreen()

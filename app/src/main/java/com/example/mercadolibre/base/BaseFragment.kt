@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.example.mercadolibre.R
+import com.example.mercadolibre.utils.createDialogWithoutBackground
 
 
 abstract class BaseFragment<B: ViewDataBinding> : Fragment() {
@@ -38,10 +40,6 @@ abstract class BaseFragment<B: ViewDataBinding> : Fragment() {
 
     abstract fun setupView()
 
-    fun getTestt(): View {
-        return test
-    }
-
     fun hideKeyboard() {
         val imm: InputMethodManager = requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         var view = requireActivity().currentFocus
@@ -57,8 +55,8 @@ abstract class BaseFragment<B: ViewDataBinding> : Fragment() {
     }
 
     fun showLoading() {
-        /*loading = requireContext().createDialogFullScreen(R.layout.loading_component)
-        loading.show()*/
+        loading = requireContext().createDialogWithoutBackground(R.layout.loading_component)
+        loading?.show()
     }
 
     fun hideLoading() {

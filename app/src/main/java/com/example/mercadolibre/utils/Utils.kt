@@ -37,11 +37,12 @@ fun View.toggleVisibility(show: Boolean) {
         hide()
 }
 
-fun Context.createDialogFullScreen(@LayoutRes layout: Int): Dialog {
+fun Context.createDialogWithoutBackground(@LayoutRes layout: Int): Dialog {
     val dialog = Dialog(this)
     dialog.apply {
-        setContentView(layout);
+        setContentView(layout)
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        window?.setBackgroundDrawableResource(android.R.color.transparent)
         setCancelable(false);
     }
     return dialog

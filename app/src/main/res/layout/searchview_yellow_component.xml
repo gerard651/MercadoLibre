@@ -30,19 +30,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/grey" />
 
-            <EditText
+            <TextView
                 android:id="@+id/input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="@null"
-                android:hint="@string/search_hint"
+                android:text="@string/search_hint"
                 android:textColor="@color/grey"
                 android:textColorHint="@color/grey"
                 android:textSize="14sp"
                 android:lines="1"
                 android:singleLine="true"
-                android:imeOptions="actionSearch"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/icon"
                 app:layout_constraintTop_toTopOf="parent" />
