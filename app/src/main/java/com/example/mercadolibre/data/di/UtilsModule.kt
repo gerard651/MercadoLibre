@@ -1,4 +1,4 @@
-package com.example.mercadolibre.di
+package com.example.mercadolibre.data.di
 
 import com.example.mercadolibre.data.helpers.ErrorLogger
 import com.example.mercadolibre.data.helpers.ProductHelper

@@ -9,6 +9,11 @@ import com.example.mercadolibre.data.entities.dto.ProductDetailDto
 import com.example.mercadolibre.data.entities.dto.ProductDto
 import com.example.mercadolibre.data.entities.dto.SearchHistoryDto
 
+/**
+ * Clase encargada de mapear de una clase a otra para optimizar
+ * el envio de datos
+ */
+
 fun CurrencyResponse.toCurrency(): CurrencyDb {
     return CurrencyDb(
         id = this.id,

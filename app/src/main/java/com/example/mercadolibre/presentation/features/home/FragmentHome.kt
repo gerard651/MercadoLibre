@@ -43,4 +43,13 @@ class FragmentHome : BaseFragment<FragmentHomeBinding>() {
         findNavController().navigate(R.id.action_fragmentHome_to_fragmentSearch)
     }
 
+    private fun removeObservers() {
+        viewModel.error.removeObservers(viewLifecycleOwner)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        removeObservers()
+    }
+
 }

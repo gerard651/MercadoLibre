@@ -4,9 +4,15 @@ import android.app.Dialog
 import android.content.Context
 import com.example.mercadolibre.R
 
+/**
+ * Clase encargada de manejar el loading en toda la app
+ */
 object LoadingHelper {
     var loading: Dialog? = null
 
+    /**
+     * @param isLoading indica si el loading debe ser mostrado
+     */
     fun showOrHideLoading(context: Context, isLoading: Boolean) {
         if(isLoading) {
             create(context)

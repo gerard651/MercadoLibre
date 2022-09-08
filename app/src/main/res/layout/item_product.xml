@@ -27,6 +27,8 @@
                     android:layout_marginHorizontal="20dp"
                     android:gravity="start"
                     android:lineSpacingExtra="5dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/product_image"
                     app:layout_constraintTop_toTopOf="@+id/product_image"

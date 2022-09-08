@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.example.mercadolibre.R
 import com.example.mercadolibre.core.Constants.ARGUMENT_PRODUCT_ID
+import com.example.mercadolibre.core.Constants.ARGUMENT_PRODUCT_NAME
 import com.example.mercadolibre.core.base.BaseFragment
 import com.example.mercadolibre.data.entities.api.ProductPictureResponse
 import com.example.mercadolibre.data.entities.dto.ProductDetailDto
@@ -49,6 +50,10 @@ class FragmentDetail : BaseFragment<FragmentDetailBinding>() {
         return arguments?.getString(ARGUMENT_PRODUCT_ID, "") ?: ""
     }
 
+    private fun getProductName(): String {
+        return arguments?.getString(ARGUMENT_PRODUCT_NAME, "") ?: ""
+    }
+
     private fun setProductInfo(product: ProductDetailDto) {
         with(binding) {
             title.text = product.title
@@ -58,6 +63,7 @@ class FragmentDetail : BaseFragment<FragmentDetailBinding>() {
             stockCount.text = getString(R.string.stock_count, product.availableQuantity)
             setupVerifiedSeller(product.officialStoreId != null, product.verifiedSeller ?: "")
             setupSlider(product.pictures)
+            updateSearchViewText(getProductName())
         }
     }
 
@@ -89,6 +95,10 @@ class FragmentDetail : BaseFragment<FragmentDetailBinding>() {
         }
     }
 
+    private fun updateSearchViewText(searchText: String) {
+        binding.searchView.setText(searchText)
+    }
+
     private fun setupSearchView() {
         binding.searchView.setupView { hasFocus ->
             if(hasFocus) {
@@ -103,6 +113,19 @@ class FragmentDetail : BaseFragment<FragmentDetailBinding>() {
 
     private fun goBack() {
         findNavController().navigateUp()
+    }
+
+    private fun removeObservers() {
+        with(viewModel) {
+            productDetail.removeObservers(viewLifecycleOwner)
+            isLoading.removeObservers(viewLifecycleOwner)
+            error.removeObservers(viewLifecycleOwner)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        removeObservers()
     }
 
 }

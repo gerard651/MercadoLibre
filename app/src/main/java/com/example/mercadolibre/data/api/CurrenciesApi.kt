@@ -5,6 +5,9 @@ import retrofit2.http.GET
 
 interface CurrenciesApi {
 
+    /**
+     * Listado de monedas disponibles
+     */
     @GET("currencies")
     suspend fun getCurrencies(): List<CurrencyResponse>
 

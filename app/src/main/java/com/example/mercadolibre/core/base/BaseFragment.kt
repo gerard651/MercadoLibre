@@ -9,7 +9,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.example.mercadolibre.core.Constants.ERROR_MESSAGE_DEFAULT
 import com.example.mercadolibre.data.helpers.LoadingHelper
 import com.example.mercadolibre.data.helpers.hideKeyboard
 import com.example.mercadolibre.data.helpers.showKeyboard
@@ -53,10 +52,14 @@ abstract class BaseFragment<B: ViewDataBinding> : Fragment(), IErrorUser {
 
     override fun showError(errorMessage: String) {
         if(errorMessage.isNotEmpty()) {
-            Toasty.error(requireContext(), ERROR_MESSAGE_DEFAULT).show()
+            Toasty.error(requireContext(), errorMessage).show()
         }
     }
 
+    /**
+     * Cambia el color de los iconos de la status bar a negro
+     * para poder contrastar con el color amarillo de la app
+     */
     fun changeStatusBarIconColors() {
         val decorView = requireActivity().window.decorView
         if(decorView.systemUiVisibility != View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)

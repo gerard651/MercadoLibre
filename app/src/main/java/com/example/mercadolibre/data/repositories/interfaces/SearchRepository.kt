@@ -15,4 +15,8 @@ interface SearchRepository {
 
     suspend fun updateSearchHistory(searchText: String, timestamp: Long)
 
+    suspend fun isValidInputSearch(searchText: String): Boolean
+
+    suspend fun isValidSearch(searchText: String): Resource<Boolean>
+
 }

@@ -8,6 +8,8 @@ import com.example.mercadolibre.R
 import com.example.mercadolibre.core.Constants.ARGUMENT_PRODUCT_NAME
 import com.example.mercadolibre.core.base.BaseFragment
 import com.example.mercadolibre.data.entities.database.SearchHistoryDb
+import com.example.mercadolibre.data.entities.dto.SearchHistoryDto
+import com.example.mercadolibre.data.entities.exceptions.InvalidSearchException
 import com.example.mercadolibre.data.viewmodel.SearchViewModel
 import com.example.mercadolibre.databinding.FragmentSearchBinding
 import com.example.mercadolibre.presentation.adapters.SearchHistoryAdapter
@@ -37,8 +39,21 @@ class FragmentSearch : BaseFragment<FragmentSearchBinding>() {
                 showError(errorMessage)
             }
             searchHistory.observe(viewLifecycleOwner) { searchList ->
-                searchHistoryAdapter.submitList(searchList)
+                showResult(searchList)
             }
+            isValidSearch.observe(viewLifecycleOwner) { isValid ->
+                doSearch(isValid)
+            }
+        }
+    }
+
+    private fun showResult(searchList: ArrayList<SearchHistoryDto>) {
+        searchHistoryAdapter.submitList(searchList)
+    }
+
+    private fun doSearch(isValid: Boolean) {
+        if(isValid) {
+            searchProduct(viewModel.searchText)
         }
     }
 
@@ -50,17 +65,26 @@ class FragmentSearch : BaseFragment<FragmentSearchBinding>() {
         with(binding) {
             searchView.setupView(
                 onSearch = { productName ->
-                    viewModel.insertOrUpdateSearch(
-                        SearchHistoryDb(
-                            text = productName,
-                            timestamp = System.currentTimeMillis()
-                        )
-                    )
-                    goToListScreen(productName)
+                    validateSearchText(productName)
             },  onBackPressed = {
-                goToHomeScreen()
+                    goToHomeScreen()
             })
         }
+    }
+
+    private fun validateSearchText(searchText: String) {
+        viewModel.validateSearchText(searchText)
+    }
+
+    private fun searchProduct(productName: String)  {
+        viewModel.insertOrUpdateSearch(
+            SearchHistoryDb(
+                text = productName,
+                timestamp = System.currentTimeMillis()
+            )
+        )
+        viewModel.resetValidSearch()
+        goToListScreen(productName)
     }
 
     private fun setupSearchAdapter() {
@@ -96,5 +120,18 @@ class FragmentSearch : BaseFragment<FragmentSearchBinding>() {
         findNavController().navigate(R.id.action_fragmentSearch_to_fragmentList, bundle)
     }
 
+    private fun removeObservers() {
+        with(viewModel) {
+            searchHistory.removeObservers(viewLifecycleOwner)
+            isLoading.removeObservers(viewLifecycleOwner)
+            error.removeObservers(viewLifecycleOwner)
+            isValidSearch.removeObservers(viewLifecycleOwner)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        removeObservers()
+    }
 
 }

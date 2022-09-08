@@ -1,6 +1,5 @@
-package com.example.mercadolibre.di
+package com.example.mercadolibre.data.di
 
-import com.example.mercadolibre.data.api.ProductApi
 import com.example.mercadolibre.data.api.SearchApi
 import com.example.mercadolibre.data.database.dao.CurrenciesDao
 import com.example.mercadolibre.data.repositories.implementation.ListRepositoryImpl

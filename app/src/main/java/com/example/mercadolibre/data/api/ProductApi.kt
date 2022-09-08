@@ -7,6 +7,10 @@ import retrofit2.http.Path
 
 interface ProductApi {
 
+    /**
+     * Obtiene el detalle del producto
+     * @param itemId id del producto
+     */
     @GET("items/{itemId}")
     suspend fun getProductDetail(
         @Path("itemId") itemId: String

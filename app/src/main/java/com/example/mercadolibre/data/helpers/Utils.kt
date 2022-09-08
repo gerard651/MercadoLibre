@@ -9,6 +9,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 
+/**
+ * Crea un dialog full screen sin color de fondo
+ * Utilizado mayormente para crear loadings o toasts
+ * @param layout id del layout para crear el custom dialog
+ */
 fun Context.createDialogWithoutBackground(@LayoutRes layout: Int): Dialog {
     return (Dialog(this)).apply {
         setContentView(layout)

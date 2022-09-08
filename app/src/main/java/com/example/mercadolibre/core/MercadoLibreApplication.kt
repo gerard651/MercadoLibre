@@ -15,6 +15,10 @@ class MercadoLibreApplication : Application(), IErrorLogger {
         logAllErrors()
     }
 
+    /**
+     * Log de todas las excepciones que pueden ocurrir durante la vida de la app
+     * incluidas aquellas que la puedan hacer crashear
+     */
     private fun logAllErrors() {
         Thread.setDefaultUncaughtExceptionHandler { _, paramThrowable ->
             logError(paramThrowable.localizedMessage ?: "")

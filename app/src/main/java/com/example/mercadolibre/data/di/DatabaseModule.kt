@@ -1,4 +1,4 @@
-package com.example.mercadolibre.di
+package com.example.mercadolibre.data.di
 
 import android.content.Context
 import androidx.room.Room

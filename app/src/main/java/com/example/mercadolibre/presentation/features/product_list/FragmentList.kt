@@ -9,6 +9,7 @@ import com.example.mercadolibre.R
 import com.example.mercadolibre.core.Constants.ARGUMENT_PRODUCT_ID
 import com.example.mercadolibre.core.Constants.ARGUMENT_PRODUCT_NAME
 import com.example.mercadolibre.core.base.BaseFragment
+import com.example.mercadolibre.data.entities.dto.ProductDto
 import com.example.mercadolibre.data.viewmodel.ListViewModel
 import com.example.mercadolibre.databinding.FragmentListBinding
 import com.example.mercadolibre.presentation.adapters.ProductListAdapter
@@ -36,7 +37,7 @@ class FragmentList : BaseFragment<FragmentListBinding>() {
     private fun setupProductListAdapter() {
         productListAdapter = ProductListAdapter(
             onProductClicked =  { productId ->
-                goToProductDetail(productId)
+                goToProductDetail(productId, getProductName())
         })
         binding.recyclerviewProductList.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -54,10 +55,14 @@ class FragmentList : BaseFragment<FragmentListBinding>() {
                 showError(errorMessage)
             }
             products.observe(viewLifecycleOwner) { products ->
-                if(products.isNotEmpty()) {
-                    productListAdapter.submitList(products)
-                }
+                showResult(products)
             }
+        }
+    }
+
+    private fun showResult(products: ArrayList<ProductDto>) {
+        if(products.isNotEmpty()) {
+            productListAdapter.submitList(products)
         }
     }
 
@@ -81,10 +86,25 @@ class FragmentList : BaseFragment<FragmentListBinding>() {
         findNavController().navigateUp()
     }
 
-    private fun goToProductDetail(id: String) {
-        val bundle = Bundle()
-        bundle.putString(ARGUMENT_PRODUCT_ID, id)
+    private fun goToProductDetail(id: String, searchText: String) {
+        val bundle = Bundle().apply {
+            putString(ARGUMENT_PRODUCT_ID, id)
+            putString(ARGUMENT_PRODUCT_NAME, searchText)
+        }
         findNavController().navigate(R.id.action_fragmentList_to_fragmentDetail, bundle)
+    }
+
+    private fun removeObservers() {
+        with(viewModel) {
+            products.removeObservers(viewLifecycleOwner)
+            isLoading.removeObservers(viewLifecycleOwner)
+            error.removeObservers(viewLifecycleOwner)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        removeObservers()
     }
 
 }

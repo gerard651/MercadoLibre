@@ -3,9 +3,11 @@ package com.example.mercadolibre.data.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mercadolibre.core.Constants
 import com.example.mercadolibre.data.helpers.Resource
 import com.example.mercadolibre.data.entities.database.SearchHistoryDb
 import com.example.mercadolibre.data.entities.dto.SearchHistoryDto
+import com.example.mercadolibre.data.entities.exceptions.InvalidSearchException
 import com.example.mercadolibre.data.helpers.toListOfSearchDto
 import com.example.mercadolibre.data.interfaces.IErrorLogger
 import com.example.mercadolibre.data.repositories.interfaces.SearchRepository
@@ -21,7 +23,9 @@ class SearchViewModel @Inject constructor(
 
     var isLoading = MutableLiveData(false)
     var error = MutableLiveData("")
+    var isValidSearch = MutableLiveData(false)
     var searchHistory = MutableLiveData<ArrayList<SearchHistoryDto>>(arrayListOf())
+    var searchText = ""
 
     fun insertOrUpdateSearch(searchHistory: SearchHistoryDb) {
         viewModelScope.launch {
@@ -53,4 +57,26 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun validateSearchText(textToValidate: String) {
+        viewModelScope.launch {
+            searchText = textToValidate
+            when(val response = repository.isValidSearch(searchText)) {
+                is Resource.Success -> {
+                    isValidSearch.postValue(response.data ?: false)
+                }
+                is Resource.Error -> {
+                    val errorMessage = response.message ?: ""
+                    error.postValue(errorMessage)
+                    errorLogger.logError(errorMessage)
+                }
+            }
+        }
+    }
+
+    fun resetValidSearch() {
+        isValidSearch.postValue(false)
+        error.postValue("")
+    }
+
 }
+
