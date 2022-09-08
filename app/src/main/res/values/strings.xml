@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">MercadoLibre</string>
-
-
-    <!-- Search screen -->
     <string name="search_hint">Buscar en Mercado Libre</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="price">%1$s %2$d</string>
+    <string name="seller">Vendido por %1$s</string>
+    <string name="available_stock">Stock disponible</string>
+    <string name="stock_count">%1$d disponibles</string>
+    <string name="condition_and_sold_amount">%1$s  |  %2$d vendidos</string>
+    <string name="detail_seller">por %1$s</string>
+    <string name="image_amount_and_index">%1$d/%2$d</string>
 </resources>
