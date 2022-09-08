@@ -9,8 +9,6 @@ import com.example.mercadolibre.core.Constants.ARGUMENT_PRODUCT_NAME
 import com.example.mercadolibre.core.base.BaseFragment
 import com.example.mercadolibre.data.entities.database.SearchHistoryDb
 import com.example.mercadolibre.data.entities.dto.SearchHistoryDto
-import com.example.mercadolibre.data.entities.exceptions.InvalidSearchException
-import com.example.mercadolibre.data.viewmodel.SearchViewModel
 import com.example.mercadolibre.databinding.FragmentSearchBinding
 import com.example.mercadolibre.presentation.adapters.SearchHistoryAdapter
 import dagger.hilt.android.AndroidEntryPoint

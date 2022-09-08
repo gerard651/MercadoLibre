@@ -10,7 +10,6 @@ import com.example.mercadolibre.core.Constants.ARGUMENT_PRODUCT_ID
 import com.example.mercadolibre.core.Constants.ARGUMENT_PRODUCT_NAME
 import com.example.mercadolibre.core.base.BaseFragment
 import com.example.mercadolibre.data.entities.dto.ProductDto
-import com.example.mercadolibre.data.viewmodel.ListViewModel
 import com.example.mercadolibre.databinding.FragmentListBinding
 import com.example.mercadolibre.presentation.adapters.ProductListAdapter
 import dagger.hilt.android.AndroidEntryPoint

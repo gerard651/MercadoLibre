@@ -4,7 +4,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mercadolibre.R
 import com.example.mercadolibre.core.base.BaseFragment
-import com.example.mercadolibre.data.viewmodel.HomeViewModel
 import com.example.mercadolibre.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 

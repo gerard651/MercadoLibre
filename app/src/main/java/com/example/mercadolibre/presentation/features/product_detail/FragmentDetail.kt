@@ -11,7 +11,6 @@ import com.example.mercadolibre.core.base.BaseFragment
 import com.example.mercadolibre.data.entities.api.ProductPictureResponse
 import com.example.mercadolibre.data.entities.dto.ProductDetailDto
 import com.example.mercadolibre.data.helpers.ConditionEnum
-import com.example.mercadolibre.data.viewmodel.DetailViewModel
 import com.example.mercadolibre.databinding.FragmentDetailBinding
 import com.example.mercadolibre.presentation.adapters.ImagesSliderAdapter
 import dagger.hilt.android.AndroidEntryPoint

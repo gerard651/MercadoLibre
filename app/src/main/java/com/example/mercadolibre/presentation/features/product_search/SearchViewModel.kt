@@ -1,4 +1,4 @@
-package com.example.mercadolibre.data.viewmodel
+package com.example.mercadolibre.presentation.features.product_search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

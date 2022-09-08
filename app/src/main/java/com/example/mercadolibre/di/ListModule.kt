@@ -1,4 +1,4 @@
-package com.example.mercadolibre.data.di
+package com.example.mercadolibre.di
 
 import com.example.mercadolibre.data.api.SearchApi
 import com.example.mercadolibre.data.database.dao.CurrenciesDao
