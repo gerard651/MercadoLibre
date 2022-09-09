@@ -4,7 +4,6 @@ import com.example.mercadolibre.core.Constants.PRODUCT_TAG_TO_GET_VERIFIED_SELLE
 import com.example.mercadolibre.core.Constants.PRODUCT_THUMBNAIL_REPLACE_COUNT_OF_DIGITS
 import com.example.mercadolibre.core.Constants.PRODUCT_THUMBNAIL_REPLACE_TO_PREFIX
 import com.example.mercadolibre.data.entities.api.ProductAttributeResponse
-import java.lang.Exception
 
 /**
  * Contiene utilidades para los productos

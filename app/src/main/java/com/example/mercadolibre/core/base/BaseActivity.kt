@@ -1,17 +1,12 @@
 package com.example.mercadolibre.core.base
 
 import android.app.Dialog
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.example.mercadolibre.data.interfaces.IErrorUser
-import es.dmoral.toasty.Toasty
 
 abstract class BaseActivity<B: ViewDataBinding> : AppCompatActivity() {
     lateinit var binding: B

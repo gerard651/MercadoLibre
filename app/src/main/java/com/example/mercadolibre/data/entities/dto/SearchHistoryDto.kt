@@ -1,5 +1,7 @@
 package com.example.mercadolibre.data.entities.dto
 
-data class SearchHistoryDto(
+import javax.inject.Inject
+
+data class SearchHistoryDto @Inject constructor(
     val text: String
 )

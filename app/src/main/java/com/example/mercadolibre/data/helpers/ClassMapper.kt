@@ -3,8 +3,8 @@ package com.example.mercadolibre.data.helpers
 import com.example.mercadolibre.data.entities.api.CurrencyResponse
 import com.example.mercadolibre.data.entities.api.ProductDetailResponse
 import com.example.mercadolibre.data.entities.api.ProductResponse
-import com.example.mercadolibre.data.entities.database.CurrencyDb
-import com.example.mercadolibre.data.entities.database.SearchHistoryDb
+import com.example.mercadolibre.data.entities.database.CurrencyEntity
+import com.example.mercadolibre.data.entities.database.SearchHistoryEntity
 import com.example.mercadolibre.data.entities.dto.ProductDetailDto
 import com.example.mercadolibre.data.entities.dto.ProductDto
 import com.example.mercadolibre.data.entities.dto.SearchHistoryDto
@@ -14,8 +14,8 @@ import com.example.mercadolibre.data.entities.dto.SearchHistoryDto
  * el envio de datos
  */
 
-fun CurrencyResponse.toCurrency(): CurrencyDb {
-    return CurrencyDb(
+fun CurrencyResponse.toCurrency(): CurrencyEntity {
+    return CurrencyEntity(
         id = this.id,
         symbol = this.symbol
     )
@@ -33,14 +33,22 @@ fun ProductResponse.toProductDto(): ProductDto {
     )
 }
 
-fun SearchHistoryDb.toSearchDto(): SearchHistoryDto {
+fun SearchHistoryEntity.toSearchDto(): SearchHistoryDto {
     return SearchHistoryDto(text)
 }
 
-fun List<SearchHistoryDb>.toListOfSearchDto(): List<SearchHistoryDto> {
+fun SearchHistoryDto.toSearchEntityTest(): SearchHistoryEntity {
+    return SearchHistoryEntity(
+        id = System.currentTimeMillis().toInt(),
+        text = text,
+        timestamp = System.currentTimeMillis()
+    )
+}
+
+fun List<SearchHistoryEntity>.toListOfSearchDto(): List<SearchHistoryDto> {
     return this.map { it.toSearchDto() }
 }
 
-fun List<CurrencyResponse>.toListOfCurrency(): List<CurrencyDb> {
+fun List<CurrencyResponse>.toListOfCurrency(): List<CurrencyEntity> {
     return this.map { it.toCurrency() }
 }

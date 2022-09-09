@@ -1,10 +1,10 @@
 package com.example.mercadolibre.data.repositories.implementation
 
 import com.example.mercadolibre.core.Constants
-import com.example.mercadolibre.data.helpers.Resource
 import com.example.mercadolibre.data.database.dao.SearchHistoryDao
-import com.example.mercadolibre.data.entities.database.SearchHistoryDb
+import com.example.mercadolibre.data.entities.database.SearchHistoryEntity
 import com.example.mercadolibre.data.entities.exceptions.InvalidSearchException
+import com.example.mercadolibre.data.helpers.Resource
 import com.example.mercadolibre.data.repositories.interfaces.SearchRepository
 import retrofit2.HttpException
 import java.io.IOException
@@ -16,7 +16,7 @@ class SearchRepositoryImpl @Inject constructor(
     private val searchHistoryDao: SearchHistoryDao
 ): SearchRepository {
 
-    override suspend fun getSearchHistory(): Resource<List<SearchHistoryDb>> {
+    override suspend fun getSearchHistory(): Resource<List<SearchHistoryEntity>> {
         return try {
             Resource.Success(searchHistoryDao.getSearchHistory())
         } catch(e: IOException) {
@@ -26,11 +26,11 @@ class SearchRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun insertSearchHistory(searchHistory: SearchHistoryDb) {
+    override suspend fun insertSearchHistory(searchHistory: SearchHistoryEntity) {
         searchHistoryDao.insertSearch(searchHistory)
     }
 
-    override suspend fun insertOrUpdateSearchHistory(searchHistory: SearchHistoryDb) {
+    override suspend fun insertOrUpdateSearchHistory(searchHistory: SearchHistoryEntity) {
         if(!existSearch(searchHistory.text))
             insertSearchHistory(searchHistory)
         else
@@ -45,12 +45,8 @@ class SearchRepositoryImpl @Inject constructor(
         searchHistoryDao.updateSearchHistoryByText(searchText, timestamp)
     }
 
-    @Throws(InvalidSearchException::class)
     override suspend fun isValidInputSearch(searchText: String): Boolean {
-        val isValid = searchText.length >= Constants.SEARCH_MIN_LENGTH
-        if(!isValid)
-            throw InvalidSearchException()
-        return isValid
+        return searchText.length >= Constants.SEARCH_MIN_LENGTH
     }
 
     override suspend fun isValidSearch(searchText: String): Resource<Boolean> {

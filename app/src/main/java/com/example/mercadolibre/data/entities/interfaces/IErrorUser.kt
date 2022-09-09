@@ -1,4 +1,4 @@
-package com.example.mercadolibre.data.interfaces
+package com.example.mercadolibre.data.entities.interfaces
 
 interface IErrorUser {
 

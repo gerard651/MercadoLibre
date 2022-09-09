@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class CurrencyDb(
+data class CurrencyEntity(
     @PrimaryKey val id: String,
     val symbol: String
 )

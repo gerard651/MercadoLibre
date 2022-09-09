@@ -3,21 +3,20 @@ package com.example.mercadolibre.presentation.features.product_search
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mercadolibre.core.Constants
-import com.example.mercadolibre.data.helpers.Resource
-import com.example.mercadolibre.data.entities.database.SearchHistoryDb
+import com.example.mercadolibre.data.domain.search.SearchUseCases
+import com.example.mercadolibre.data.entities.database.SearchHistoryEntity
 import com.example.mercadolibre.data.entities.dto.SearchHistoryDto
 import com.example.mercadolibre.data.entities.exceptions.InvalidSearchException
+import com.example.mercadolibre.data.entities.interfaces.IErrorLogger
+import com.example.mercadolibre.data.helpers.Resource
 import com.example.mercadolibre.data.helpers.toListOfSearchDto
-import com.example.mercadolibre.data.interfaces.IErrorLogger
-import com.example.mercadolibre.data.repositories.interfaces.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: SearchRepository,
+    private val searchUseCases: SearchUseCases,
     private val errorLogger: IErrorLogger
 ): ViewModel() {
 
@@ -27,28 +26,28 @@ class SearchViewModel @Inject constructor(
     var searchHistory = MutableLiveData<ArrayList<SearchHistoryDto>>(arrayListOf())
     var searchText = ""
 
-    fun insertOrUpdateSearch(searchHistory: SearchHistoryDb) {
+    fun insertOrUpdateSearch(searchHistory: SearchHistoryEntity) {
         viewModelScope.launch {
-            repository.insertOrUpdateSearchHistory(searchHistory)
+            searchUseCases.insertOrUpdateSearch(searchHistory)
         }
     }
 
     fun updateSearch(searchText: String) {
         viewModelScope.launch {
-            repository.updateSearchHistory(searchText, System.currentTimeMillis())
+            searchUseCases.updateSearch(searchText, System.currentTimeMillis())
         }
     }
 
     fun getSearchHistory() {
         viewModelScope.launch {
             isLoading.postValue(true)
-            when(val response = repository.getSearchHistory()) {
+            when(val response = searchUseCases.getSearchHistory()) {
                 is Resource.Success -> {
                     searchHistory.postValue(ArrayList(response.data?.toListOfSearchDto() ?: arrayListOf()))
                     isLoading.postValue(false)
                 }
                 is Resource.Error -> {
-                    val errorMessage = response.message ?: ""
+                    val errorMessage = response.message
                     errorLogger.logError(errorMessage)
                     isLoading.postValue(false)
                     error.postValue(errorMessage)
@@ -59,21 +58,26 @@ class SearchViewModel @Inject constructor(
 
     fun validateSearchText(textToValidate: String) {
         viewModelScope.launch {
-            searchText = textToValidate
-            when(val response = repository.isValidSearch(searchText)) {
-                is Resource.Success -> {
-                    isValidSearch.postValue(response.data ?: false)
+            try {
+                searchText = textToValidate
+                when(val response = searchUseCases.isValidSearch(textToValidate)) {
+                    is Resource.Success -> {
+                        isValidSearch.postValue(response.data ?: false)
+                    }
+                    is Resource.Error -> {
+                        val errorMessage = response.message
+                        error.postValue(errorMessage)
+                        errorLogger.logError(errorMessage)
+                    }
                 }
-                is Resource.Error -> {
-                    val errorMessage = response.message ?: ""
-                    error.postValue(errorMessage)
-                    errorLogger.logError(errorMessage)
-                }
+            } catch (e: InvalidSearchException) {
+                errorLogger.logError(e.message)
+                error.postValue(e.message)
             }
         }
     }
 
-    fun resetValidSearch() {
+    fun resetValues() {
         isValidSearch.postValue(false)
         error.postValue("")
     }

@@ -1,0 +1,5 @@
+package com.example.mercadolibre.data.entities.exceptions
+
+import com.example.mercadolibre.core.Constants.EXCEPTION_PRODUCT_DETAIL_NOT_FOUND
+
+class ProductDetailNotFoundException : Exception(EXCEPTION_PRODUCT_DETAIL_NOT_FOUND)

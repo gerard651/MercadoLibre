@@ -3,7 +3,7 @@ package com.example.mercadolibre.core
 import android.app.Application
 import android.util.Log
 import com.example.mercadolibre.core.Constants.LOG_ERROR_APPLICATION_TAG
-import com.example.mercadolibre.data.interfaces.IErrorLogger
+import com.example.mercadolibre.data.entities.interfaces.IErrorLogger
 import dagger.hilt.android.HiltAndroidApp
 import kotlin.system.exitProcess
 
@@ -26,8 +26,8 @@ class MercadoLibreApplication : Application(), IErrorLogger {
         }
     }
 
-    override fun logError(errorMessage: String) {
-        Log.e(LOG_ERROR_APPLICATION_TAG, errorMessage)
+    override fun logError(errorMessage: String?) {
+        Log.e(LOG_ERROR_APPLICATION_TAG, errorMessage ?: "")
     }
 
 }

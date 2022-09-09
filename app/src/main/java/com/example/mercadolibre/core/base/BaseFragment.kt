@@ -9,10 +9,10 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.example.mercadolibre.data.entities.interfaces.IErrorUser
 import com.example.mercadolibre.data.helpers.LoadingHelper
 import com.example.mercadolibre.data.helpers.hideKeyboard
 import com.example.mercadolibre.data.helpers.showKeyboard
-import com.example.mercadolibre.data.interfaces.IErrorUser
 import es.dmoral.toasty.Toasty
 
 abstract class BaseFragment<B: ViewDataBinding> : Fragment(), IErrorUser {

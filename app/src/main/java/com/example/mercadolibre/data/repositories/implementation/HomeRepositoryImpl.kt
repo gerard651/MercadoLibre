@@ -2,10 +2,10 @@ package com.example.mercadolibre.data.repositories.implementation
 
 import com.example.mercadolibre.core.Constants.ERROR_HTTP_EXCEPTION
 import com.example.mercadolibre.core.Constants.ERROR_IO_EXCEPTION
-import com.example.mercadolibre.data.helpers.Resource
 import com.example.mercadolibre.data.api.CurrenciesApi
 import com.example.mercadolibre.data.database.dao.CurrenciesDao
 import com.example.mercadolibre.data.entities.api.CurrencyResponse
+import com.example.mercadolibre.data.helpers.Resource
 import com.example.mercadolibre.data.helpers.toListOfCurrency
 import com.example.mercadolibre.data.repositories.interfaces.HomeRepository
 import retrofit2.HttpException

@@ -56,10 +56,10 @@ class FragmentDetail : BaseFragment<FragmentDetailBinding>() {
     private fun setProductInfo(product: ProductDetailDto) {
         with(binding) {
             title.text = product.title
-            conditionAndSoldAmount.text = getString(R.string.condition_and_sold_amount, getConditionText(product.condition), product.soldQuantity)
+            conditionAndSoldAmount.text = resources.getQuantityString(R.plurals.condition_and_sold_amount, product.soldQuantity, getConditionText(product.condition), product.soldQuantity)
             price.text = getString(R.string.price, product.symbol, product.price.toInt())
             stockTitle.text = getString(R.string.available_stock)
-            stockCount.text = getString(R.string.stock_count, product.availableQuantity)
+            stockCount.text = resources.getQuantityString(R.plurals.stock_count, product.availableQuantity, product.availableQuantity)
             setupVerifiedSeller(product.officialStoreId != null, product.verifiedSeller ?: "")
             setupSlider(product.pictures)
             updateSearchViewText(getProductName())

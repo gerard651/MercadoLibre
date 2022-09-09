@@ -8,7 +8,7 @@ import com.example.mercadolibre.R
  * Clase encargada de manejar el loading en toda la app
  */
 object LoadingHelper {
-    var loading: Dialog? = null
+    private var loading: Dialog? = null
 
     /**
      * @param isLoading indica si el loading debe ser mostrado

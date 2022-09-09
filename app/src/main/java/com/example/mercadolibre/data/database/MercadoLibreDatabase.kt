@@ -5,11 +5,11 @@ import androidx.room.RoomDatabase
 import com.example.mercadolibre.core.Constants
 import com.example.mercadolibre.data.database.dao.CurrenciesDao
 import com.example.mercadolibre.data.database.dao.SearchHistoryDao
-import com.example.mercadolibre.data.entities.database.CurrencyDb
-import com.example.mercadolibre.data.entities.database.SearchHistoryDb
+import com.example.mercadolibre.data.entities.database.CurrencyEntity
+import com.example.mercadolibre.data.entities.database.SearchHistoryEntity
 
 @Database(
-    entities = [SearchHistoryDb::class, CurrencyDb::class],
+    entities = [SearchHistoryEntity::class, CurrencyEntity::class],
     version = Constants.DB_VERSION,
     exportSchema = false
 )

@@ -1,7 +1,9 @@
 package com.example.mercadolibre.di
 
 import com.example.mercadolibre.data.api.SearchApi
-import com.example.mercadolibre.data.database.dao.CurrenciesDao
+import com.example.mercadolibre.data.domain.currency.GetCurrencySymbolById
+import com.example.mercadolibre.data.domain.list.GetProductByName
+import com.example.mercadolibre.data.domain.list.ListUseCases
 import com.example.mercadolibre.data.repositories.implementation.ListRepositoryImpl
 import com.example.mercadolibre.data.repositories.interfaces.ListRepository
 import dagger.Module
@@ -17,10 +19,18 @@ object ListModule {
     @Provides
     @Singleton
     fun provideListRepository(
-        searchApi: SearchApi,
-        currenciesDao: CurrenciesDao
+        searchApi: SearchApi
     ): ListRepository {
-        return ListRepositoryImpl(searchApi, currenciesDao)
+        return ListRepositoryImpl(searchApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideListUseCases(
+        getCurrencySymbolById: GetCurrencySymbolById,
+        getProductByName: GetProductByName
+    ): ListUseCases {
+        return ListUseCases(getCurrencySymbolById, getProductByName)
     }
 
 }

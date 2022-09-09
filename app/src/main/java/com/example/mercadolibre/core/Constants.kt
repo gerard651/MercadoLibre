@@ -12,6 +12,10 @@ object Constants {
 
     // Excepciones
     const val EXCEPTION_INVALID_SEARCH = "La busqueda no cumple el minimo de caracteres"
+    const val EXCEPTION_EMPTY_CURRENCIES = "Error al obtener tipo de monedas"
+    const val EXCEPTION_CURRENCY_NOT_FOUND = "No existe el tipo de moneda"
+    const val EXCEPTION_PRODUCT_DETAIL_NOT_FOUND = "No se pudo obtener el detalle del producto"
+    const val EXCEPTION_PRODUCT_NOT_FOUND = "No se obtuvieron resultados"
 
     // Api
     const val SITE_UY = "MLU"

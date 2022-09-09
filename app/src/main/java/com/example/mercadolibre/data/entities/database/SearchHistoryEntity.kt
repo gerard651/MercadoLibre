@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class SearchHistoryDb(
+data class SearchHistoryEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val text: String,
-    var timestamp: Long
+    val text: String = "",
+    var timestamp: Long = 0L
 )
